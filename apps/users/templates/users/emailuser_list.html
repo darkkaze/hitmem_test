@@ -1,0 +1,71 @@
+{%extends 'base_panel.html'%}
+{% load i18n %}
+{% load bootstrap5 %}
+
+{%block title%}{% trans "Hits"%}{%endblock%}
+
+
+{%block content%}
+
+<br>
+{%include 'messages.html'%}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+        <h2>{%trans "Hitmen"%}</h2>
+    </div>
+
+    <div class="col-md" style="text-align: right;">
+        <a href="{%url 'hitmen_create'%}" class="btn btn-primary">Crear</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Email</th>
+              <th scope="col">First name</th>
+              <th scope="col">Last name</th>
+              {%if request.user.type == 'bigboss'%}<th scope="col">manager</th>{%endif%}
+              <th scope="col">is_active</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for object in object_list%}
+                <tr>
+                  <th scope="row">
+                    <a href="{%url 'hitmen_detail' pk=object.id%}">{{object.email}}</a>
+                  </th>
+                  <th scope="row">
+                    {{object.first_name}}
+                  </th>
+                  <th scope="row">
+                    {{object.last_name}}
+                  </th>
+                  {%if request.user.type == 'bigboss'%}
+                  <th scope="row">
+                    {{object.managed_by}}
+                  </th>
+                  {%endif%}
+                  <th scope="row">
+                    {{object.is_active}}
+                  </th>
+                </tr>
+            {%endfor%}
+          </tbody>
+      </table>
+      <br>
+          <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">{%trans 'pager not implemented'%}</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+        </nav>
+
+    </div>
+  </div>
+</div>
+{%endblock%}

@@ -1,0 +1,65 @@
+{%extends 'base_panel.html'%}
+{% load i18n %}
+{% load bootstrap5 %}
+
+{%block title%}{% trans "Hits"%}{%endblock%}
+
+
+{%block content%}
+
+<br>
+{%include 'messages.html'%}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+        <h2>{%trans "Hits"%}</h2>
+    </div>
+
+    <div class="col-md" style="text-align: right;">
+        <a href="{%url 'hit_create'%}" class="btn btn-primary">Crear</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Detail</th>
+              <th scope="col">Hitmen</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for object in object_list%}
+                <tr>
+                  <th scope="row">
+                    <a href="{%url 'hit_detail' pk=object.id%}">{{object.target}}</a>
+                  </th>
+                  <th scope="row">
+                    {{object.description}}
+                  </th>
+                  <th scope="row">
+                    {{object.hitmen_by}}
+                  </th>
+                  <th scope="row">
+                    {{object.status}}
+                  </th>
+                </tr>
+            {%endfor%}
+          </tbody>
+      </table>
+      <br>
+          <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">{%trans 'pager not implemented'%}</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+        </nav>
+
+    </div>
+  </div>
+</div>
+{%endblock%}
