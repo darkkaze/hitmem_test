@@ -30,6 +30,7 @@ class HitmenFactory(DjangoModelFactory):
     class Meta:
         model = User
 
+    email = factory.Faker('email')
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
     managed_by = factory.SubFactory(ManagerFactory)

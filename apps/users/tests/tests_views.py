@@ -4,7 +4,7 @@ from django.urls import reverse
 from .factories import BigBossFactory, HitmenFactory, ManagerFactory
 
 
-class AuthRequiredViewsTestCase(TestCase):
+class AuthRequiredHitmenViewsTestCase(TestCase):
 
     def setUp(self):
         """
@@ -26,7 +26,7 @@ class AuthRequiredViewsTestCase(TestCase):
         self.assertEqual(resp.status_code, 403)
 
 
-class HitmenAuthViewsTestCase(TestCase):
+class HitmenViewsAuthTestCase(TestCase):
 
     def setUp(self):
         """
@@ -49,7 +49,7 @@ class HitmenAuthViewsTestCase(TestCase):
         self.assertEqual(resp.status_code, 403)
 
 
-class ManagerAuthViewsTestCase(TestCase):
+class ManagerViewsAuthTestCase(TestCase):
 
     def setUp(self):
         """
@@ -145,7 +145,7 @@ class ManagerAuthViewsTestCase(TestCase):
         self.assertRedirects(resp, reverse('hitmen_list'))
 
 
-class BigBossAuthViewsTestCase(TestCase):
+class BigBossViewsAuthTestCase(TestCase):
     """
     notes:
         I consider it not worth repeating all the tests of the form

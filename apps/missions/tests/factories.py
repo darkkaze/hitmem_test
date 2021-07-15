@@ -1,5 +1,5 @@
 import factory
-from apps.hits.models import Hit
+from apps.missions.models import Hit
 from apps.users.tests.factories import HitmenFactory, ManagerFactory
 from factory.django import DjangoModelFactory
 

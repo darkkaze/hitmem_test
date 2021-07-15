@@ -12,10 +12,8 @@ from .models import Hit
 class HitListView(PermissionMixin, ListView):
     model = Hit
     permission_classes = [IsAuthenticated]
-    paginate_by = 100
 
     def get_queryset(self):
-        return super().get_queryset()
         if self.request.user.is_superuser:
             return super().get_queryset()
         elif self.request.user.is_staff:
@@ -42,6 +40,21 @@ class HitDetailView(PermissionMixin, UpdateView):
         else:
             return HitUpdateForm
 
+    def get_form(self, form_class=None):
+        """
+        Return an instance of the form to be used in this view
+
+        notes: 
+            this method is part of the generic flow and 
+        """
+        if form_class is None:
+            form_class = self.get_form_class()
+        if self.request.user.is_superuser or not self.request.user.is_staff:
+            return form_class(**self.get_form_kwargs())
+        else:
+            return form_class(
+                manager=self.request.user, **self.get_form_kwargs())
+
     def get_template_names(self):
         """
         return diferent template depending from the user
@@ -52,7 +65,7 @@ class HitDetailView(PermissionMixin, UpdateView):
         if self.request.user.is_staff:
             return super().get_template_names()
         else:
-            return ['missions/Hit_detail.html']
+            return ['missions/hit_detail.html']
 
     def form_valid(self, form):
         """

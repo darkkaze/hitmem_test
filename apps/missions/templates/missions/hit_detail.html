@@ -1,0 +1,33 @@
+
+{%extends 'base_panel.html'%}
+{% load i18n %}
+{% load bootstrap5 %}
+
+{%block title%}{% trans "Hit"%}{%endblock%}
+
+
+{%block content%}
+
+<br>
+{%include 'messages.html'%}
+            <table class="table">
+                  <th scope="row">
+                    <td>target</td>
+                    <td>{{object.target}}</td>
+                  </th>
+                  <th scope="row">
+                    <td>description</td>
+                    <td>{{object.description}}</td>
+                  </th>
+            </table>
+<form action="" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <br>
+    {% buttons %}
+        <div class="d-grid gap-1">
+            <button type="submit" class="btn btn-primary">{% trans "Guardar" %}</button>
+        </div>
+    {% endbuttons %}
+</form>
+{%endblock%}
