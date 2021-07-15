@@ -16,6 +16,7 @@ class Hit(models.Model):
         User,
         related_name='assigned_hits',
         on_delete=models.PROTECT)
+    created_datetime = models.DateTimeField(default=timezone.now)
     status = models.CharField(
         max_length=20,
         choices=(('assigned', 'Assigned'),

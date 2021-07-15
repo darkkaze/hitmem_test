@@ -1,13 +1,15 @@
 from apps.permissions.mixins import PermissionMixin
 from apps.permissions.permissions import IsAuthenticated, IsManager, IsMyHitmen
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 
 from .forms import (HitmenBossEditForm, HitmenBossForm, HitmenEditForm,
                     HitmenForm, ManagerUserForm)
-from .models import EmailUser
+
+User = get_user_model()
 
 
 def home_redirect(request):
@@ -17,7 +19,7 @@ def home_redirect(request):
 
 
 class SignUpView(CreateView):
-    model = EmailUser
+    model = User
     form_class = ManagerUserForm
     success_url = reverse_lazy('login')
 
@@ -35,7 +37,7 @@ class SignUpView(CreateView):
 
 
 class HitmenListView(PermissionMixin, ListView):
-    model = EmailUser
+    model = User
     permission_classes = [IsAuthenticated, IsManager]
     paginate_by = None
 
@@ -57,7 +59,7 @@ class HitmenListView(PermissionMixin, ListView):
 
 
 class HitmenDetailView(PermissionMixin, UpdateView):
-    model = EmailUser
+    model = User
     permission_classes = [IsAuthenticated, IsManager, IsMyHitmen]
     success_url = reverse_lazy('hitmen_list')
 
@@ -87,7 +89,7 @@ class HitmenDetailView(PermissionMixin, UpdateView):
 
 
 class HitmenCreateView(PermissionMixin, CreateView):
-    model = EmailUser
+    model = User
     permission_classes = [IsAuthenticated, IsManager]
     success_url = reverse_lazy('hitmen_list')
 

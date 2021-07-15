@@ -1,6 +1,7 @@
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         Group, Permission, PermissionsMixin)
 from django.db import models
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -80,6 +81,7 @@ class EmailUser(AbstractBaseUser, PermissionsMixin):
         related_name="user_set",
         related_query_name="user",
     )
+    created_datetime = models.DateTimeField(default=timezone.now)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
